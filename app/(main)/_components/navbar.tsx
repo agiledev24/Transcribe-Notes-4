@@ -23,9 +23,10 @@ export const Navbar = ({
 }: NavbarProps) => {
   const params = useParams();
 
-  const document = useQuery(api.documents.getById, {
+
+  const document = params.documentId? useQuery(api.documents.getById, {
     documentId: params.documentId as Id<"documents">,
-  });
+  }): undefined;
 
   if (document === undefined) {
     return (

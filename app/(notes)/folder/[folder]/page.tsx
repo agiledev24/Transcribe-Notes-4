@@ -10,7 +10,7 @@ import { Id } from "@/convex/_generated/dataModel";
 type Props = {}
 
 const FolderPage = ({ params }: { params: { folder: string } }) => {
-  const notes = useQuery(api.note.FolderNotes, {folderId:params.folder as Id<'folder'>})
+  const notes = useQuery(api.note.FolderNotes, {folderId:params.folder as Id<'folder'>, isArchived: false})
 
   if(!notes) return <div>No Notes found</div>
 return (

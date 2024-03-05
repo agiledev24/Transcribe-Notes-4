@@ -27,6 +27,7 @@ import {
 
 interface ItemProps {
   id?: Id<"documents">;
+  folderId?: string;
   documentIcon?: string;
   active?: boolean;
   expanded?: boolean;
@@ -40,21 +41,19 @@ interface ItemProps {
 
 export const Item = ({
   id,
+  folderId,
   label,
   onClick,
   icon: Icon,
   active,
   documentIcon,
   isSearch,
-  level = 0,
-  onExpand,
-  expanded,
 }: ItemProps) => {
   const { user } = useUser();
   const router = useRouter();
   const create = useMutation(api.documents.create);
   const archive = useMutation(api.documents.archive);
-
+ 
   const onArchive = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
@@ -70,23 +69,13 @@ export const Item = ({
     });
   };
 
-  const handleExpand = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
-    event.stopPropagation();
-    onExpand?.();
-  };
-
   const onCreate = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     event.stopPropagation();
     if (!id) return;
-    const promise = create({ title: "Untitled", parentDocument: id })
+    const promise = create({ title: "Untitled", parentDocument: id, folderId: folderId })
       .then((documentId) => {
-        if (!expanded) {
-          onExpand?.();
-        }
         router.push(`/documents/${documentId}`);
       });
 
@@ -97,21 +86,20 @@ export const Item = ({
     });
   };
 
-  const ChevronIcon = expanded ? ChevronDown : ChevronRight;
 
   return (
     <div
       onClick={onClick}
       role="button"
       style={{ 
-        paddingLeft: level ? `${(level * 12) + 12}px` : "12px"
+        paddingLeft: "12px"
       }}
       className={cn(
         "group min-h-[27px] text-sm py-1 pr-3 w-full hover:bg-primary/5 flex items-center text-muted-foreground font-medium",
         active && "bg-primary/5 text-primary"
       )}
     >
-      {!!id && (
+      {/* {!!id && (
         <div
           role="button"
           className="h-full rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600 mr-1"
@@ -121,7 +109,7 @@ export const Item = ({
             className="h-4 w-4 shrink-0 text-muted-foreground/50"
           />
         </div>
-      )}
+      )} */}
       {documentIcon ? (
         <div className="shrink-0 mr-2 text-[18px]">
           {documentIcon}

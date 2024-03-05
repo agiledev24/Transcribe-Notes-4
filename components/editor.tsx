@@ -25,7 +25,7 @@ const Editor = ({ onChange, initialContent, editable }: EditorProps) => {
   // console.log("edgestore:", edgestore);
   // console.log("finalTranscription:", finalTranscription);
   // console.log("currentSessionId:", currentSessionId);
-  console.log('initialContent', initialContent)
+  // console.log('initialContent', initialContent)
 
   let editor: BlockNoteEditor;
   try {

@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import { Spinner } from "@/components/spinner";
 import { SearchCommand } from "@/components/search-command";
 
-import { Navigation, useNavigation } from "./_components/navigation";
+import { useNavigation } from "./_components/navigation";
 import { TranscriptionProvider } from "../(speech)/app/components/TranscriptionContext";
 
 const MainLayout = ({

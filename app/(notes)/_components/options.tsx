@@ -61,7 +61,7 @@ const Options = ({
     const updatenotetitle = useMutation(api.note.updateTitleNote)
     const [selectedFolder, setSelectedFolder] = useState<Id<"folder">>()
     const [title, setTitle] = useState<string>("")
-    console.log(selectedFolder)
+    console.log('selectedFolder', selectedFolder)
 
     const handleCreateFolder = () => {
       const promise = createfolder({ title: "Untitled" })

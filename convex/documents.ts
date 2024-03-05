@@ -115,7 +115,7 @@ export const create = mutation({
   args: {
     title: v.string(),
     parentDocument: v.optional(v.id("documents")),
-
+    folderId: v.optional(v.string())
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
@@ -130,6 +130,7 @@ export const create = mutation({
       title: args.title,
       parentDocument: args.parentDocument,
       userId,
+      folderId: args.folderId,
       isArchived: false,
       isPublished: false,
       noteCreationDateTime: new Date().toISOString(), // Use the current date and time

@@ -169,18 +169,18 @@ export const useNavigation = () => {
           />
           <Item
             onClick={handleCreate}
-            label="New page"
+            label="New Note"
             icon={PlusCircle}
           />
         </div>
         <div className="mt-4">
-          <Private />
+          {/* <Private />  */}
           <DocumentList />
-          <Item
+          {/* <Item
             onClick={handleCreate}
             icon={Plus}
             label="Add a page"
-          />
+          /> */}
 
           <Popover>
             <PopoverTrigger className="w-full mt-4">

@@ -258,6 +258,7 @@ export const updateTitleNote = mutation({
 export const FolderNotes = query({
     args:{
         folderId:v.id("folder"),
+        isArchived:v.optional(v.boolean())
     },
     handler: async (ctx, args) => {
         const identity = await ctx.auth.getUserIdentity();
@@ -267,6 +268,7 @@ export const FolderNotes = query({
         }
         const notes = await ctx.db.query('documents')
         .filter((q) => q.eq(q.field("folderId"), args.folderId))
+        .filter((q) => q.eq(q.field("isArchived"), args.isArchived))
         .collect();
         
         return notes

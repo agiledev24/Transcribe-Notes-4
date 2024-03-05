@@ -13,10 +13,14 @@ const FolderComp = ({note}:{note:Doc<'documents'>}) => {
         ) 
     : null;
   return (
-    <Link href={`/notes/${note._id}`} className='inline-block '>
+    <Link href={`/documents/${note._id}`} className='inline-block '>
     <div className='flex  space-x-2 hover:bg-primary/5 rounded-md p-2'>
         <span>
-            <FileText size={32} />
+            {
+                note.icon
+                ? note.icon
+                : <FileText size={32} />
+            }
         </span>
         <div className='flex flex-col text-xs'>
             <span>{note.title}</span>
