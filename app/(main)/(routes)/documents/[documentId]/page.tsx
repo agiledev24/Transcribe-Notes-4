@@ -31,21 +31,21 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [isCollapsed, setIsCollapsed] = useState(isMobile);
 
-  const { 
+  const {
     isDisabledRecordButton,
-    audioFileUrl, 
-    setAudioFileUrl, 
-    setAudioCurrentTime, 
-    isTranscribed, 
-    setIsTranscribed, 
-    addFinalTranscription, 
+    audioFileUrl,
+    setAudioFileUrl,
+    setAudioCurrentTime,
+    isTranscribed,
+    setIsTranscribed,
+    addFinalTranscription,
     clearFinalTranscriptions,
     setLiveTranscription,
     setSummarizationResult,
     summarizationResult,
     summaryNote,
     setSummaryNote
-   } = useContext(TranscriptionContext);
+  } = useContext(TranscriptionContext);
 
   const document = useQuery(api.documents.getById, {
     documentId: params.documentId,
@@ -66,7 +66,7 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
       console.log('document', document)
       const content = JSON.parse(document.content);
       if (content && !isTranscribed) {
-        content?.map(function(transcription: any, index: any) {
+        content?.map(function (transcription: any, index: any) {
           addFinalTranscription(transcription);
           setIsTranscribed(true);
         })
@@ -75,9 +75,9 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
         setAudioFileUrl(document.audioFileUrl);
       }
 
-      setSummarizationResult(document.summarizationResult ? document.summarizationResult: "");
+      setSummarizationResult(document.summarizationResult ? document.summarizationResult : "");
 
-      setSummaryNote(document.summaryNote? document.summaryNote: "");
+      setSummaryNote(document.summaryNote ? document.summaryNote : "");
     }
   }, [document]);
 
@@ -140,7 +140,7 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
   return (
     <div className="flex h-full justify-end">
       <div className={`flex flex-col page ${!isCollapsed && isMobile ? 'w-0' : 'w-full transition-all ease-in-out duration-300'} h-full`}>
-        <div className={"page-content w-auto" + (!isTranscribed ? "h-full" : "")}>
+        <div className={`page-content w-auto ${document.coverImage ? '' : 'pt-16'} ${!isTranscribed ? "h-full" : ""}`}>
           <Cover url={document.coverImage} />
           {!!document.icon && (
             <div className="flex absolute transform translate-y-[-50%] left-[40px] bg-[#50d71e] w-[120px] h-[120px] p-[8px] justify-center rounded-md z-50">

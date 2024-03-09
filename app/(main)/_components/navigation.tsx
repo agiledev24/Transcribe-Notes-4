@@ -227,5 +227,8 @@ export const useNavigation = () => {
     )
   }, [isResetting, isMobile, isCollapsed]);
 
-  return [navigation, navbar];
+  return {
+    navigation,
+    navbar
+  };
 }

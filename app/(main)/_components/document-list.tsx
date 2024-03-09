@@ -25,9 +25,7 @@ export const DocumentList = ({
   level = 0
 }: DocumentListProps) => {
   
-  
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
-
   const onExpand = (documentId: string) => {
     setExpanded(prevExpanded => ({
       ...prevExpanded,
@@ -54,27 +52,14 @@ export const DocumentList = ({
       </>
     );
   };
-
+  console.log('expanded', expanded)
   return (
     <>
-      <p
-        style={{
-          paddingLeft: level ? `${(level * 12) + 25}px` : undefined
-        }}
-        className={cn(
-          "hidden text-sm font-medium text-muted-foreground/80",
-          expanded && "last:block",
-          level === 0 && "hidden"
-        )}
-      >
-        No pages inside
-      </p>
-
       <div className="text-muted-foreground">
         {
-        folders.map((folder) => (
-            <FolderItem key={folder._id} folderId={folder._id} foldertitle={folder.title}/>
-        ))
+        folders.map((folder) => {
+            return <FolderItem key={folder._id} folderId={folder._id} foldertitle={folder.title} isExpanded={expanded[folder._id]} onExpand={() => onExpand(folder._id)}/>
+        })
         }
       </div>
     </>
@@ -82,8 +67,8 @@ export const DocumentList = ({
 
 
 };
-const FolderItem = ({folderId, foldertitle}:{folderId:Id<"folder">, foldertitle:string}) => {
-    const [shownotes, setShownotes] = useState<boolean>(false)
+const FolderItem = ({folderId, foldertitle, isExpanded, onExpand}:{folderId: Id<"folder">, foldertitle: string, isExpanded: boolean, onExpand?: () => void}) => {
+    const [shownotes, setShownotes] = useState<boolean>(isExpanded)
     const [showOption, setShowOption] = useState<boolean>(false)
     const notes = useQuery(api.note.getNotesById,{
         folderId
@@ -101,7 +86,7 @@ const FolderItem = ({folderId, foldertitle}:{folderId:Id<"folder">, foldertitle:
     return(
         <div>
             <div onMouseEnter={() => setShowOption(true)} onMouseLeave={() => setShowOption(false)} className='flex items-center justify-between py-[1px] hover:bg-primary/5 px-3 cursor-pointer'>   
-                <div onClick={() => {setShownotes(!shownotes); router.push(`/folder/${folderId}`)}}  className='flex items-center space-x-1'>
+                <div onClick={() => {setShownotes(!shownotes); onExpand?.(); router.push(`/folder/${folderId}`)}}  className='flex items-center space-x-1'>
                     <ChevronComp folderId={folderId} isCollapsed={shownotes}/>
                     <Folder size={18} />
                     <span>{foldertitle}</span>
@@ -141,8 +126,6 @@ const FolderItem = ({folderId, foldertitle}:{folderId:Id<"folder">, foldertitle:
     const notes = useQuery(api.note.getNotesById,{
         folderId
     });
-
-    console.log(notes)
 
     if( notes && notes?.length <= 0){
         return(

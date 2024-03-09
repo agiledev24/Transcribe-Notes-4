@@ -3,11 +3,12 @@ import { Transcription } from "@/app/types";
 export type VoiceItemProps = {
   transcription: Transcription;
   isSelected: boolean;
+  id?: string;
 };
 
-const VoiceItem = ({ transcription, isSelected }: VoiceItemProps) => {
+const VoiceItem = ({ transcription, isSelected, id }: VoiceItemProps) => {
   return (
-    <div className="flex flex-col gap-[12px]">
+    <div className="flex flex-col gap-[12px] transition-all ease-in-out duration-300" id={id}>
       <div className="flex flex-row items-center gap-[12px] text-sm font-bold">
         <div className="w-[16px] h-[16px] rounded-full bg-[#d0888c]" />
         Speaker {transcription.speaker}

@@ -28,7 +28,7 @@ const MainLayout = ({
     return redirect("/");
   }
 
-  const [navigation, navbar] = useNavigation();
+  const { navigation, navbar } = useNavigation();
 
   return (
     <TranscriptionProvider>

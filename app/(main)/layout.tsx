@@ -15,7 +15,7 @@ const MainLayout = ({
   children: React.ReactNode;
 }) => {
   const { isAuthenticated, isLoading } = useConvexAuth();
-
+  const { navigation, navbar } = useNavigation();
   if (isLoading) {
     return (
       <div className="h-full flex items-center justify-center">
@@ -27,8 +27,6 @@ const MainLayout = ({
   if (!isAuthenticated) {
     return redirect("/");
   }
-
-  const [navigation, navbar] = useNavigation();
 
   return (
     <TranscriptionProvider>
